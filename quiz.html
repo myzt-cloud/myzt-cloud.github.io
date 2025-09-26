@@ -2,25 +2,127 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>問題1</title>
-  <link rel="stylesheet" href="style.css"> <!-- ここでCSSを読み込み -->
+  <title>クイズ</title>
+  <style>
+    body {
+      font-family: "Yu Gothic", sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .quiz-box {
+      background: white;
+      padding: 2em;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 1em;
+      color: #333;
+    }
+    p {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 1em;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.7em;
+      margin: 1em 0;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    input[type="text"]:focus {
+      border-color: #0078d7;
+      box-shadow: 0 0 6px rgba(0,120,215,0.4);
+      outline: none;
+    }
+    button {
+      padding: 0.8em 2em;
+      border: none;
+      border-radius: 8px;
+      background: #0078d7;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.1s;
+    }
+    button:hover {
+      background: #005a9e;
+    }
+    button:active {
+      transform: scale(0.97);
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
-
 <body>
-  <div class="container">
-    <h2>問題1</h2>
-    <p>「日本の首都は？」</p>
-    <input type="text" id="answer" placeholder="答えを入力">
-    <button onclick="checkAnswer()">送信</button>
+  <div class="quiz-box">
+    <!-- 問題1 -->
+    <div class="question" id="q1">
+      <h2>問題1</h2>
+      <p>「日本の首都は？」</p>
+      <input type="text" id="answer1" placeholder="答えを入力">
+      <button onclick="checkAnswer(1)">送信</button>
+    </div>
+
+    <!-- 問題2 -->
+    <div class="question hidden" id="q2">
+      <h2>問題2</h2>
+      <p>「3 × 4 = ?」</p>
+      <input type="text" id="answer2" placeholder="答えを入力">
+      <button onclick="checkAnswer(2)">送信</button>
+    </div>
+
+    <!-- 問題3 -->
+    <div class="question hidden" id="q3">
+      <h2>問題3</h2>
+      <p>「水は英語で？」</p>
+      <input type="text" id="answer3" placeholder="答えを入力">
+      <button onclick="checkAnswer(3)">送信</button>
+    </div>
+
+    <!-- 完了画面 -->
+    <div class="question hidden" id="finish">
+      <h2>🎉 全問正解！</h2>
+      <p>おめでとうございます！</p>
+    </div>
   </div>
 
   <script>
-    function checkAnswer() {
-      const ans = document.getElementById("answer").value.trim();
+    function checkAnswer(num) {
+      let ans = document.getElementById("answer" + num).value.trim();
 
-      if (ans === "東京" || ans === "とうきょう") {
+      // 問題ごとの正解を設定
+      const answers = {
+        1: ["東京", "とうきょう"],
+        2: ["12"],
+        3: ["water", "ウォーター"]
+      };
+
+      if (answers[num].includes(ans)) {
         alert("正解！");
-        window.location.href = "q2.html"; // 正解したら次のページへ
+
+        // 次の問題を表示
+        document.getElementById("q" + num).classList.add("hidden");
+
+        if (document.getElementById("q" + (num + 1))) {
+          document.getElementById("q" + (num + 1)).classList.remove("hidden");
+        } else {
+          // 全問終了
+          document.getElementById("finish").classList.remove("hidden");
+        }
+
       } else {
         alert("不正解です。もう一度！");
       }
