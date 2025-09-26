@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>問題1</title>
+  <link rel="stylesheet" href="style.css"> <!-- ここでCSSを読み込み -->
+</head>
+
+<body>
+  <div class="container">
+    <h2>問題1</h2>
+    <p>「日本の首都は？」</p>
+    <input type="text" id="answer" placeholder="答えを入力">
+    <button onclick="checkAnswer()">送信</button>
+  </div>
+
+  <script>
+    function checkAnswer() {
+      const ans = document.getElementById("answer").value.trim();
+
+      if (ans === "東京" || ans === "とうきょう") {
+        alert("正解！");
+        window.location.href = "q2.html"; // 正解したら次のページへ
+      } else {
+        alert("不正解です。もう一度！");
+      }
+    }
+  </script>
+</body>
+</html>
